@@ -1,0 +1,36 @@
+<!-- src/app/authors/author-search/author-search.component.html -->
+<div class="container mt-4">
+    <h2>Search Author</h2>
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="authorId" class="form-label">Author ID:</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          id="authorId" 
+          formControlName="authorId"
+          placeholder="Enter author ID">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  
+    <div *ngIf="author" class="mt-4">
+      <h3>Author Details</h3>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{author.firstName}} {{author.lastName}}</h5>
+          <p class="card-text" *ngIf="author.bio">Bio: {{author.bio.biodata}}</p>
+          <h6>Books:</h6>
+          <ul class="list-unstyled">
+            <li *ngFor="let book of author.books">
+              {{book.title}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{errorMessage}}
+    </div>
+  </div>
