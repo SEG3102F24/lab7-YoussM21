@@ -1,36 +1,40 @@
-<!-- src/app/authors/author-search/author-search.component.html -->
 <div class="container mt-4">
-    <h2>Search Author</h2>
-    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label for="authorId" class="form-label">Author ID:</label>
-        <input 
-          type="number" 
-          class="form-control" 
-          id="authorId" 
-          formControlName="authorId"
-          placeholder="Enter author ID">
-      </div>
-      <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-  
-    <div *ngIf="author" class="mt-4">
-      <h3>Author Details</h3>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{author.firstName}} {{author.lastName}}</h5>
-          <p class="card-text" *ngIf="author.bio">Bio: {{author.bio.biodata}}</p>
+  <h2>Search Author</h2>
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="authorId" class="form-label">Author ID:</label>
+      <input 
+        type="number" 
+        class="form-control" 
+        id="authorId" 
+        formControlName="authorId"
+        placeholder="Enter author ID">
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!searchForm.value.authorId">Search</button>
+  </form>
+
+  <div *ngIf="author" class="mt-4">
+    <h3>Author Details</h3>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{author.firstName}} {{author.lastName}}</h5>
+        <p class="card-text" *ngIf="author.bio">Bio: {{author.bio.biodata}}</p>
+        <div *ngIf="author.books && author.books.length > 0">
           <h6>Books:</h6>
-          <ul class="list-unstyled">
-            <li *ngFor="let book of author.books">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let book of author.books">
               {{book.title}}
             </li>
           </ul>
         </div>
+        <div *ngIf="!author.books || author.books.length === 0" class="text-muted mt-2">
+          No books found for this author
+        </div>
       </div>
     </div>
-  
-    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-      {{errorMessage}}
-    </div>
   </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{errorMessage}}
+  </div>
+</div>

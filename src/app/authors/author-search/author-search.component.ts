@@ -1,4 +1,3 @@
-// src/app/authors/author-search/author-search.component.ts
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -31,9 +30,11 @@ export class AuthorSearchComponent {
           this.author = data;
           this.errorMessage = '';
         },
-        error: (_: any) => {
+        error: (error: any) => {
           this.author = null;
-          this.errorMessage = 'Author not found';
+          this.errorMessage = error.status === 404 ? 
+            'Author not found' : 
+            'An error occurred while fetching the author';
         }
       });
     }
